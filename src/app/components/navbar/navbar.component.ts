@@ -8,27 +8,33 @@ import { UserService } from "../../services/user.service";
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
+
 export class NavbarComponent implements OnInit {
   title = 'toDoApp para SD';
   displayName = '';
+  menuOpen = false;
 
-  constructor(
-    public userService: UserService, 
-    public router: Router
-  ) { }
-
+  constructor(public userService: UserService, public router: Router) { }
   ngOnInit(): void {
     console.log('ngOnInit: navbar');
     this.userService.getUser().subscribe({
       next: user => {
         console.log("Usuario cargado: ", user);
-        this.displayName = user.displayName;
-      },
-      error: err => {
-        console.error("Error cargando datos del usuario");
-        console.log(err);
-        this.router.navigateByUrl("/login");
-      }
-    });
+        return this.displayName = user.displayName
+  },
+  error: err => {
+    this.router.navigateByUrl("/login");
+    console.error("Error cargando datos del usuario");
+    console.log(err);
+  }
+  });
+}
+  toggleMenu(): void {
+    this.menuOpen = !this.menuOpen;
+  }
+
+  logout(): void {
+    this.menuOpen = false;
+    this.userService.signOut();
   }
 }
