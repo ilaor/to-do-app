@@ -1,4 +1,45 @@
-<!-- Insertamos la barra de navegación -->
 <app-navbar></app-navbar>
-<!-- Muestra el mensaje -->
-<p>tasks works!</p>
+
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-body">
+      <form (submit)="addTask($event)">
+        <div class="input-group">
+          <input 
+            type="text" 
+            [(ngModel)]="titulo" 
+            name="titulo" 
+            class="form-control" 
+            placeholder="Añade una tarea"
+          >
+          <button type="submit" class="btn btn-primary">
+            Añadir tarea
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="card mt-4">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Estado</th>
+          <th>Título</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of tasks">
+          <td>
+            <input type="checkbox" [checked]="task.completed">
+          </td>
+          <td>{{ task.title }}</td>
+          <td>
+            <button class="btn btn-danger btn-sm">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
