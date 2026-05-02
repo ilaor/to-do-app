@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Task } from '../models/task.model';
 
@@ -7,28 +7,36 @@ import { Task } from '../models/task.model';
   providedIn: 'root'
 })
 export class TaskService {
-  apiRest = 'https://localhost:3000/api/tareas';
+  domain: string = 'https://localhost:3000';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient) {}
+
+  private getHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token'); 
+    
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}` 
+    });
   }
 
   getTasks() {
-    return this.http.get<Task[]>(`${this.apiRest}`)
+    return this.http.get<Task[]>(`${this.domain}/api/tareas`, { headers: this.getHeaders() })
       .pipe(map(res => res));
   }
 
   addTask(newTask: Task) {
-    return this.http.post<Task>(`${this.apiRest}`, newTask)
+    return this.http.post<Task>(`${this.domain}/api/tareas`, newTask, { headers: this.getHeaders() })
       .pipe(map(res => res));
   }
 
   deleteTask(id: any) {
-    return this.http.delete<any>(`${this.apiRest}/${id}`)
+    return this.http.delete<any>(`${this.domain}/api/tareas/${id}`, { headers: this.getHeaders() })
       .pipe(map(res => res));
   }
 
-  updateTask(id: any, newTaskData: Task) {
-    return this.http.put<any>(`${this.apiRest}/${id}`, newTaskData)
+  updateTask(id: any, newTask: any) {
+    return this.http.put<any>(`${this.domain}/api/tareas/${id}`, newTask, { headers: this.getHeaders() })
       .pipe(map(res => res));
   }
 }

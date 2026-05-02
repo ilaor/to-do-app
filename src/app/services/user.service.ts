@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class UserService {
-  private apiRest = 'http://localhost:4100/api/auth'; //http porque  https no funciona en localhost
+  private apiRest = 'https://localhost:4100/api/auth'; 
   private currentUser: any;
 
   constructor(
