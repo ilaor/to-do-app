@@ -36,5 +36,8 @@ export class NavbarComponent implements OnInit {
   logout(): void {
     this.menuOpen = false;
     this.userService.signOut();
+    console.log('Cerrando sesión: borrando token y redirigiendo al login...'); 
   }
+
+
 }

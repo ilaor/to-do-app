@@ -14,7 +14,7 @@ const routes: Routes = [
     path: 'login', 
     component: LoginComponent 
   },
-  // Redirecciones
+
   { 
     path: 'home', 
     redirectTo: '' 
